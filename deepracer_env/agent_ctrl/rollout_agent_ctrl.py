@@ -207,7 +207,7 @@ class RolloutCtrl(AgentCtrlInterface, ObserverInterface, AbstractTracker):
         '''reset agent by reseting member variables, reset s3 metrics, and reset agent to
            starting position at the beginning of each episode
         '''
-        LOG.info("Reset agent")
+        LOG.info(f"Reset agent (count: {self._reset_count})")
         self._clear_data()
         self._metrics.reset()
         send_action(self._velocity_pub_dict_, self._steering_pub_dict_, 0.0, 0.0)
@@ -226,7 +226,7 @@ class RolloutCtrl(AgentCtrlInterface, ObserverInterface, AbstractTracker):
         self._track_data_.update_object_pose(self._agent_name_, start_model_state.pose)
         # update pause car model pose to the new start model state pose
         self._prepare_car_model_pose = start_model_state.pose
-        LOG.info("Reset agent finished")
+        LOG.info(f"Reset agent (count: {self._reset_count}) finished")
 
     def _pause_car_model(self, car_model_pose, should_reset_camera=False, blocking=False):
         """Pause agent immediately at the current position for both pause and prepare state

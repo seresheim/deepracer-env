@@ -198,6 +198,28 @@ docker run --rm \
 Then connect a **desktop VNC client** (e.g. [TigerVNC](https://tigervnc.org/),
 RealVNC Viewer) to `localhost:5900`. No password is set.
 
+#### Simulation speed: `RTF_OVERRIDE`
+
+Control the simulation speed via the `RTF_OVERRIDE` environment variable
+(Real-Time Factor):
+
+```bash
+docker run --rm \
+  -e WORLD_NAME=reinvent_base \
+  -e RTF_OVERRIDE=2.0 \
+  my-deepracer-project:latest
+```
+
+| Value | Effect |
+|-------|--------|
+| `1.0` | Real-time simulation |
+| `> 1.0` | Faster than real-time (e.g., `2.0` = 2× speed) |
+| `< 1.0` | Slower than real-time (e.g., `0.5` = half speed) |
+
+The actual achievable speed depends on your hardware — if your system cannot
+compute physics fast enough at the requested rate, Gazebo will throttle down
+to the maximum your hardware can sustain.
+
 > **Note:** Browser-based noVNC clients will not work — port 5900 is a raw VNC
 > port, not a WebSocket endpoint.
 
